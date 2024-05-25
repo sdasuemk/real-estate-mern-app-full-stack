@@ -48,5 +48,12 @@ const createHeaders = (authToken) => ({
     // authToken,
     data,
   });
+  export const postSignInByGoogle = async (data) =>
+  apiRequest({
+    endpoint: "auth/google",
+    method: "POST",
+    // authToken,
+    data,
+  });
 
   
