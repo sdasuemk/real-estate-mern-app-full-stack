@@ -1,12 +1,20 @@
 import { useState } from "react";
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from "react-router-dom";
 import { Toaster, toast } from "react-hot-toast";
 import { postSignInForm } from "../../services/services";
+import {
+  signInStart,
+  signInSuccess,
+  signInFailure,
+} from '../redux/user/userSlice';
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  const { loading } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) =>
     setFormData((prev) => ({
@@ -15,16 +23,19 @@ const SignIn = () => {
     }));
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
+    // setLoading(true);
+    dispatch(signInStart());
     try {
-      await postSignInForm(formData);
+      const {data} = await postSignInForm(formData);
       toast.success("Successfully Created!");
+      dispatch(signInSuccess(data));
       navigate('/');
     } catch (err) {
       console.log(err.response.data.message);
       toast.error(`Failed! ${err.response.data.message}`);
+      dispatch(signInFailure(err.response.data.message));
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
   
