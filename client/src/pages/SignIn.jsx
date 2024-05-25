@@ -8,6 +8,7 @@ import {
   signInSuccess,
   signInFailure,
 } from '../redux/user/userSlice';
+import OAth from "../components/OAth";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
@@ -27,7 +28,7 @@ const SignIn = () => {
     dispatch(signInStart());
     try {
       const {data} = await postSignInForm(formData);
-      toast.success("Successfully Created!");
+      toast.success("Success.");
       dispatch(signInSuccess(data));
       navigate('/');
     } catch (err) {
@@ -65,6 +66,7 @@ const SignIn = () => {
         >
           {loading ? 'Loading...' : 'Sign Up'}
         </button>
+        <OAth />
       </form>
       <div className="flex gap-2 mt-5">
         <p>Do not have an account?</p>
