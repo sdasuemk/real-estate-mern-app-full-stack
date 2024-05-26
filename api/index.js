@@ -5,6 +5,7 @@ import connectDB from './db/db.js';
 import userRouter from './routes/user.route.js';
 import authRouter from './routes/auth.route.js';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -16,7 +17,12 @@ const app = express();
 
 
 app.use(express.json());
-app.use(cors());
+// app.use(cors());
+app.use(cors({
+  origin: `http://localhost:5173`, // Replace with your client's URL
+  credentials: true, // Allow credentials (cookies, authorization headers, TLS client certificates)
+}));
+app.use(cookieParser());
 
 
 // Routers

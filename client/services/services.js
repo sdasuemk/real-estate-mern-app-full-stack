@@ -3,8 +3,9 @@ import { BASE_URL } from '../constants/constants';
 
 const createHeaders = (authToken) => ({
     headers: {
-      authorization: `bearer ${authToken}`,
+      // authorization: `bearer ${authToken}`,
       "Content-Type": "application/json",
+      credentials: 'include',
     },
   });
   
@@ -51,6 +52,13 @@ const createHeaders = (authToken) => ({
   export const postSignInByGoogle = async (data) =>
   apiRequest({
     endpoint: "auth/google",
+    method: "POST",
+    // authToken,
+    data,
+  });
+  export const postUpdateUserProfile = async (id, data) =>
+  apiRequest({
+    endpoint: `user/update/:${id}`,
     method: "POST",
     // authToken,
     data,
