@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -9,9 +9,9 @@ const connectDB = async () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log('Connected to MongoDB!');
+    console.log("Connected to MongoDB!");
   } catch (err) {
-    console.error('Failed to connect to MongoDB', err);
+    console.error("Failed to connect to MongoDB", err);
     process.exit(1);
   }
 };
