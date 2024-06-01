@@ -76,5 +76,45 @@ const createHeaders = () => ({
     // authToken,
     data,
   });
+  export const showListings = async (id) =>
+  apiRequest({
+    endpoint: `user/listings/${id}`,
+    method: "GET",
+    // authToken,
+    // data,
+  });
+  export const getUser = async (id) =>
+  apiRequest({
+    endpoint: `user/${id}`,
+    method: "GET",
+    // authToken,
+    // data,
+  });
+  export const createListing = async (data) =>
+  apiRequest({
+    endpoint: `listing/create-listing`,
+    method: "POST",
+    // authToken,
+    data,
+  });
+  export const deleteListing = async (id) =>
+  apiRequest({
+    endpoint: `listing/delete-listing/${id}`,
+    method: "DELETE",
+    // authToken,
+  });
+  export const getListing = async (id) =>
+  apiRequest({
+    endpoint: `listing/get-a-listing/${id}`,
+    method: "GET",
+    // authToken,
+  });
+  export const updateListing = async (id, data) =>
+  apiRequest({
+    endpoint: `listing/update-listing/${id}`,
+    method: "POST",
+    data,
+    // authToken,
+  });
 
   
