@@ -1,16 +1,15 @@
 import axios from 'axios';
 import { BASE_URL } from '../constants/constants';
 
-const createHeaders = (authToken) => ({
+const createHeaders = () => ({
     headers: {
-      // authorization: `bearer ${authToken}`,
       "Content-Type": "application/json",
-      credentials: 'include',
     },
   });
   
   const axiosInstance = axios.create({
     baseURL: BASE_URL,
+    withCredentials: true,
   });
 
   const apiRequest = async ({ endpoint, method, authToken, data }) => {
@@ -42,6 +41,13 @@ const createHeaders = (authToken) => ({
     // authToken,
     data,
   });
+  export const doSignOut = async (data) =>
+  apiRequest({
+    endpoint: "auth/signout",
+    method: "GET",
+    // authToken,
+    data,
+  });
   export const postSignInForm = async (data) =>
   apiRequest({
     endpoint: "auth/signin",
@@ -58,8 +64,15 @@ const createHeaders = (authToken) => ({
   });
   export const postUpdateUserProfile = async (id, data) =>
   apiRequest({
-    endpoint: `user/update/:${id}`,
+    endpoint: `user/update/${id}`,
     method: "POST",
+    // authToken,
+    data,
+  });
+  export const deleteUserProfile = async (id, data) =>
+  apiRequest({
+    endpoint: `user/delete/${id}`,
+    method: "DELETE",
     // authToken,
     data,
   });

@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { postUpdateUserProfile } from "../../services/services";
+import useAlert from '../hooks/useAlert';
+import { postUpdateUserProfile, deleteUserProfile, doSignOut } from "../../services/services";
 import { Toaster, toast } from "react-hot-toast";
 import {
   getDownloadURL,
@@ -12,6 +13,12 @@ import {
   updateUserStart,
   updateUserSuccess,
   updateUserFailure,
+  deleteUserFailure,
+  deleteUserSuccess,
+  deleteUserStart,
+  signOutUserFailure,
+  signOutUserSuccess,
+  signOutUserStart,
 } from '../redux/user/userSlice';
 import { app } from '../firebase';
 
@@ -21,8 +28,9 @@ const Profile = () => {
   const [file, setFile] = useState(undefined);
   const [filePerc, setFilePerc] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({...currentUser});
   const dispatch = useDispatch();
+  const showAlert = useAlert();
 
   useEffect(() => {
     if (file) {
@@ -55,6 +63,7 @@ const Profile = () => {
       }
     );
   };
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
@@ -78,11 +87,53 @@ const Profile = () => {
       // setLoading(false);
     }
   };
-  const handleDeleteUser = (event) => {
-    console.log(event);
+  const handleDeleteUser = async () => {
+    showAlert({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      confirmButtonText: 'Yes, delete it!',
+      cancelButtonText: 'No, cancel!',
+      nextProcessCallback: async () => {
+        dispatch(deleteUserStart());
+    try {
+      const {data} = await deleteUserProfile(currentUser._id);
+      toast.success("Success.");
+      dispatch(deleteUserSuccess(data));
+    } catch (err) {
+      console.log(err.response.data.message);
+      toast.error(`Failed! ${err.response.data.message}`);
+      dispatch(deleteUserFailure(err.response.data.message));
+    } finally {
+      // setLoading(false);
+    }
+
+      }
+    });
   };
-  const handleSignOut = (event) => {
-    console.log(event);
+  const handleSignOut = async () => {
+    showAlert({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      nextProcessCallback: async () => {
+        dispatch(signOutUserStart());
+    try {
+      const {data} = await doSignOut();
+      toast.success("Success.");
+      dispatch(signOutUserSuccess(data));
+    } catch (err) {
+      console.log(err.response.data.message);
+      toast.error(`Failed! ${err.response.data.message}`);
+      dispatch(signOutUserFailure(err.response.data.message));
+    } finally {
+      // setLoading(false);
+    }
+        
+      },
+    });
   };
   return (
     <div className='p-3 max-w-lg mx-auto'>
