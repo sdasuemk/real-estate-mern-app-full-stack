@@ -109,6 +109,12 @@ const createHeaders = () => ({
     method: "GET",
     // authToken,
   });
+  export const getListings = async (searchTerm) =>
+  apiRequest({
+    endpoint: `listing/get-listings?${searchTerm}`,
+    method: "GET",
+    // authToken,
+  });
   export const updateListing = async (id, data) =>
   apiRequest({
     endpoint: `listing/update-listing/${id}`,
