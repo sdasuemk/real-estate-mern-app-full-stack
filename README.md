@@ -2,7 +2,7 @@
 
 **Frontend Project Name:** Real Estate Application to Buy, Sell, and Rent Property  
 **Backend Project Name:** Real Estate MERN  
-**Version:** Frontend: 0.0.0, Backend: 1.0.0  
+**Version:** Frontend: 1.0.0, Backend: 1.0.0  
 **Private:** Yes (Frontend)  
 **License:** ISC (Backend)  
 **Module Type:** ES Module  
